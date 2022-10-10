@@ -1,6 +1,7 @@
 package com.restapibookdb.controllers;
 
 import com.restapibookdb.bookServices.BookService;
+import com.restapibookdb.entities.Author;
 import com.restapibookdb.entities.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,15 @@ public class BookController {
         if (book == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.of(Optional.of(book));
+    }
+
+
+    @GetMapping("/Author/{id}")
+    public ResponseEntity<Author> getAuthor(@PathVariable("id") int id){
+        Author author = this.bookService.getAuthorById(id);
+        if (author == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.of(Optional.of(author));
     }
 
     // add books handler

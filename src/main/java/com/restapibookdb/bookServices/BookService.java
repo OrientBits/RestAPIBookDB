@@ -1,6 +1,8 @@
 package com.restapibookdb.bookServices;
 
+import com.restapibookdb.dao.AuthorRepository;
 import com.restapibookdb.dao.BookRepository;
+import com.restapibookdb.entities.Author;
 import com.restapibookdb.entities.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,9 @@ import java.util.List;
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
 
     public List<Book> getAllBooks(){
@@ -28,6 +33,19 @@ public class BookService {
         }
         return book1;
     }
+
+    public Author getAuthorById(int id){
+        Author author = null;
+        try {
+            // book1= list.stream().filter(book -> book.getId()==id).findFirst().get();
+            author = authorRepository.findById(id);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return author;
+    }
+
+
 
     public Book addBook(Book book){
         Book result = bookRepository.save(book);

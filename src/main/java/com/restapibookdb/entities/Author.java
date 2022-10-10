@@ -1,9 +1,8 @@
 package com.restapibookdb.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 
 @Entity
 public class Author {
@@ -13,6 +12,19 @@ public class Author {
     private String firstName;
     private String lastName;
     private String language;
+
+    @OneToOne(mappedBy = "author")
+    @JsonBackReference
+    private Book book;
+
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
 
 

@@ -1,17 +1,19 @@
 package com.restapibookdb.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Books")
 public class Book {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String title;
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Author author;
 
     public Book() {
