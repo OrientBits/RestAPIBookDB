@@ -1,25 +1,29 @@
 package com.restapibookdb.helper;
 
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Component
 public class FileUploadHelper {
 
-    public final String UPLOAD_DIR="P:\\SpringBoot\\RestAPIBookDB\\RestAPIBookDB\\src\\main\\resources\\static\\images";
+    //public final String UPLOAD_DIR="P:\\SpringBoot\\RestAPIBookDB\\RestAPIBookDB\\src\\main\\resources\\static\\images";
+    public final String UPLOAD_DIR;
 
+    public FileUploadHelper() throws IOException {
+        UPLOAD_DIR = new ClassPathResource("static/images/").getFile().getAbsolutePath();
+        System.out.println("Upload directory : " + UPLOAD_DIR);
+    }
 
-    public boolean uploadFile(MultipartFile f){
-        boolean isUploaded =false;
+    public boolean uploadFile(MultipartFile f) {
+        boolean isUploaded = false;
 
         try {
 //            //using old api
@@ -34,13 +38,12 @@ public class FileUploadHelper {
 //            fileOutputStream.close();
 
 
-            Files.copy(f.getInputStream(), Paths.get(UPLOAD_DIR+ File.separator+f.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-
+            Files.copy(f.getInputStream(), Paths.get(UPLOAD_DIR + File.separator + f.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
 
 
             isUploaded = true;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
