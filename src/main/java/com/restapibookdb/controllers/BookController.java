@@ -36,12 +36,12 @@ public class BookController {
     }
 
 
-    @GetMapping("/Author/{id}")
-    public ResponseEntity<Author> getAuthor(@PathVariable("id") int id){
-        Author author = this.bookService.getAuthorById(id);
-        if (author == null)
+    @GetMapping("/author")
+    public ResponseEntity<List<Author>> getAuthor(){
+        List<Author> authors = this.bookService.getAllAuthor();
+        if (authors == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.of(Optional.of(author));
+        return ResponseEntity.of(Optional.of(authors));
     }
 
     // add books handler
