@@ -44,6 +44,7 @@ public class BookService {
     public List<Book> updateBook(Book book, int id) {
 
         book.setId(id);
+        bookRepository.save(book);
         List<Book> list = (List<Book>) bookRepository.findAll();
         return list;
 

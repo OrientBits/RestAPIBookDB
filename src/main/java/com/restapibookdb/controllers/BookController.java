@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +19,7 @@ public class BookController {
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getBooks(){
         List<Book> list = this.bookService.getAllBooks();
+        System.out.println(list);
         if (list.size() <= 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(list);
@@ -39,7 +39,7 @@ public class BookController {
     public ResponseEntity<Book> addBook(@RequestBody Book book){
         try{
             Book book1 = this.bookService.addBook(book);
-            return ResponseEntity.of(Optional.of(book1));
+            return ResponseEntity.status(HttpStatus.CREATED).body(book1);
         }catch (Exception e){
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -48,7 +48,7 @@ public class BookController {
 
     // delete book handler
     @DeleteMapping("/books/{id}")
-    public ResponseEntity deleteBook(@PathVariable("id") int bookId){
+    public ResponseEntity<Void> deleteBook(@PathVariable("id") int bookId){
         try {
             this.bookService.deleteBook(bookId);
             return ResponseEntity.status(HttpStatus.OK).build();
