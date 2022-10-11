@@ -1,6 +1,8 @@
 package com.restapibookdb.bookServices;
 
+import com.restapibookdb.dao.AuthorRepository;
 import com.restapibookdb.dao.BookRepository;
+import com.restapibookdb.entities.Author;
 import com.restapibookdb.entities.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,35 +14,44 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private AuthorRepository authorRepository;
 
-    public List<Book> getAllBooks(){
+
+    public List<Book> getAllBooks() {
         List<Book> list = (List<Book>) bookRepository.findAll();
         return list;
     }
 
-    public Book getBookById(int id){
+    public Book getBookById(int id) {
         Book book1 = null;
         try {
-           // book1= list.stream().filter(book -> book.getId()==id).findFirst().get();
+            // book1= list.stream().filter(book -> book.getId()==id).findFirst().get();
             book1 = bookRepository.findById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return book1;
     }
 
-    public Book addBook(Book book){
+    public List<Author> getAllAuthor() {
+        List<Author> authors = (List<Author>) authorRepository.findAll();
+        return authors;
+    }
+
+
+    public Book addBook(Book book) {
         Book result = bookRepository.save(book);
         return result;
     }
 
-    public void deleteBook(int id){
+    public void deleteBook(int id) {
         bookRepository.deleteById(id);
         System.out.println("successfully deleted");
     }
 
 
-//update the book
+    //update the book
     public List<Book> updateBook(Book book, int id) {
 
         book.setId(id);
@@ -49,7 +60,6 @@ public class BookService {
         return list;
 
     }
-
 
 
 }
