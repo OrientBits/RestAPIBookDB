@@ -40,7 +40,7 @@ public class FileUploadController {
             if (isSuccess){
                 //return ResponseEntity.ok("File is successfully uploaded");
                 return ResponseEntity.ok(ServletUriComponentsBuilder
-                        .fromCurrentContextPath().path("/image/")
+                        .fromCurrentContextPath().path("/images/")
                         .path(file.getOriginalFilename()).toUriString());
             }else{
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("something went wrong try again!");
